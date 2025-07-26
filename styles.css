@@ -155,6 +155,7 @@ body {
             background-color: #4242423b;
             box-shadow: inset 0 4px 12px #99999918;
             transition: .1s ease-in-out;
+            cursor: pointer;
 
                 & a {
                 display: flex;
@@ -275,7 +276,6 @@ body {
     transform: translate(-72%, -2%);
     border-radius: 50%;
     transform: scale(.4);
-
 }
 
 footer {
