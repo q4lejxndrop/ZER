@@ -6,6 +6,7 @@
 
 :root {
     --white: #fff;
+    --black: #000;
 }
 
 html {
@@ -16,13 +17,14 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: rgb(99, 255, 164);
+    background-color: rgb(0, 0, 0);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: var(--white);
 }
 
 header {
     text-align: center;
+    padding: 30px 0 0 0;
 }
 
 #capa {
@@ -42,55 +44,193 @@ header {
 }
 
 #all-books {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-    width: 100vw;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem;
-    overflow: hidden;
-    scrollbar-width: thin;    
-    scrollbar-color: #ffffff transparent;
-    background-color: rgba(0, 0, 0, 0.397);
+    padding: 30px 160px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto;
+    /* background: #fafafa; */
+    /* border-radius: 16px; */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+        & h2 {
+        padding: 10px 0;
+        text-align: center;
+        font-size: 2rem;
+        color: #222;
+    }
+}
+
+/* Sección general */
+/* #books-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 120px;
+  background: #fafafa;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+} */
+
+
+.books-slider {
+  display: flex;
+  gap: 20px;
+  padding: 60px;
+  margin: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; /* 🎯 movimiento fluido */
+  -webkit-overflow-scrolling: touch;
+
+    cursor: grab;
+  user-select: none;
+  touch-action: pan-y; /* permite scroll vertical de la página, evita panning horizontal nativo */
+  -webkit-overflow-scrolling: touch;
+}
+
+.books-slider li {
+  flex: 0 0 calc(33.333% - 20px); /* 🎯 3 en PC */
+  height: 600px;
+  min-width: 320px;
+  min-height: 540px;
+  max-height: 540px;
+  max-width: 400px;
+  scroll-snap-align: start;
+  background: white;
+  color: var(--black);
+  border-radius: 12px;
+  text-align: center;
+  padding: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.books-slider li:hover {
+  transform: scale(1.005);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.books-slider img {
+  width: 90%;
+  background-size: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  user-select: none;
+  -moz-user-modify: none;
+  -webkit-user-modify: none;
+  -ms-user-modify: none;
+  user-select: none;
+  pointer-events: none;
+  touch-action: none;
+  -webkit-user-drag: none; /* Safari iOS */
+   
+}
+
+.books-slider h3 {
+  font-size: 1rem;
+  color: #444;
+  margin: 0;
+}
+
+/* Flechas */
+#all-books {
+  position: relative;
+}
+
+#all-books .arrow {
+  position: absolute;
+  top: 50%;             
+  background-color:  #ffffffb9;
+  color: var(--black);           /* se ubican en el medio */
+  transform: translateY(-50%);     /* ajuste exacto al centro */
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  border: 1px solid #ffffff49;
+  font-size: 1.8rem;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 10;
+
+  transition: background 0.3s, transform 0.2s;
+}
+
+#all-books .arrow:hover {
+  background: #42424210;
+  color: var(--white);
+  transform: translateY(-50%) scale(1.1); /* mantiene centrado incluso en hover */
+}
+
+#all-books .arrow.left {
+  left: 15px;
+}
+
+#all-books .arrow.right {
+  right: 15px;
+}
+
+/* Ocultar flechas en mobile */
+@media (max-width: 1024px) {
+  #all-books .arrow {
+    display: none;
+  }
+}
 
 
 
-    & h1 {
-        font-size: 3rem;
+/* 📱 Responsivo */
+@media (max-width: 1215px) {
+
+    #all-books {
+      padding: 10px 10px 10px 60px;
     }
 
-     & ul {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        list-style: none;
-        overflow-x: auto;
+  .books-slider li {
+    flex: 0 0 calc(50% - 20px); /* 🎯 2 libros */
+    /* 
+    height: 450px;
+    min-height: 450px;
+    max-height: 450px; 
+    */
+    /* height: 600px;
+    min-width: 400px;
+    min-height: 600px;
+    max-height: 600px;
+    padding: 0 5px; */
 
+    height: 600px;
+    min-width: 320px;
+    min-height: 480px;
+    max-height: 480px;
+    padding: 0 5px;
 
-        & li {
-            height: 310px;
-            min-height: 310px;
-            width: 220px;
-            min-width: 220px;
-            background-color: rebeccapurple;
-            border: 4.3px solid rgb(53, 53, 53);
-            padding: 1rem;
+    & img {
+         width: 80%;
+    }
+  }
+}
 
-            & h2 {
-                font-size: 2.1rem;
-                color: var(--white);
-                text-align: center;
-            }
+@media (max-width: 300px) {
 
-            &:nth-child(1) {
-                margin-left: 70rem;
-                background-color: red;
-            }
-        }
-     }
+    #all-books {
+      padding: 10px 10px 10px 60px;
+    }
+
+  .books-slider li {
+    flex: 0 0 110%; /* 🎯 1 libro */
+    height: 450px;
+    min-height: 450px;
+    max-height: 450px;
+    padding: 0 5px;
+
+    & img {
+         width: 80%;
+    }
+  }
 }
