@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libros Leidos</title>
+    <link rel="shortcut icon" href="/Icons/book-icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/CSS/books.css">
+</head>
+<body>
+    <div id="capa"></div>
+    <header>
+            <h1>Libros Leidos</h1>
+    </header>
+
+    <section id="all-books">
+        <button class="arrow left">‹</button>
+            <ul class="books-slider">
+                <li>
+                    <h2>El Alquimista</h2>
+                    <img src="/img/Books/018eda7c5353d6309dec7992b63096a7.webp" 
+                    alt="">
+                </li>
+                <li>
+                    <h2>El Gato negro</h2>
+                    <img src="/img/Books/fb2b2364b36a59aa300eaab6d377cf94.webp" 
+                    alt="">
+                </li>
+                <li>
+                    <h2>Satanas</h2>
+                    <img src="/img/Books/978958429311.gif" 
+                    alt="">
+                </li>    
+                <li>
+                    <h2>Lady Masacre</h2>
+                    <img src="/img/Books/unnamed.jpg" 
+                    alt="">
+                </li>  
+                <li>
+                    <h2>El Alquimista</h2>
+                    <img src="/img/Books/018eda7c5353d6309dec7992b63096a7.webp" 
+                    alt="">
+                </li>
+            </ul>
+        <button class="arrow right">›</button>
+    </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+document.querySelectorAll('.books-slider').forEach(slider => {
+
+// ---- WHEEL => horizontal scroll ----
+slider.addEventListener('wheel', (e) => {
+  if (slider.scrollWidth > slider.clientWidth) {
+    e.preventDefault();
+    slider.scrollLeft += e.deltaY * 2; // multiplica velocidad (ajusta 2 → 3 si quieres más rápido)
+  }
+}, { passive: false });
+
+
+
+
+    // ---- DRAG (pointer events preferred) ----
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+
+    if (window.PointerEvent) {
+      slider.addEventListener('pointerdown', (e) => {
+        isDown = true;
+        slider.classList.add('dragging');
+        startX = e.clientX;
+        startScrollLeft = slider.scrollLeft;
+        slider.setPointerCapture(e.pointerId);
+      });
+
+      slider.addEventListener('pointermove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const dx = (e.clientX - startX) * 3; // 👈 duplica sensibilidad
+        slider.scrollLeft = startScrollLeft - dx;
+      });
+
+      const endPointer = (e) => {
+        if (!isDown) return;
+        isDown = false;
+        slider.classList.remove('dragging');
+        try { slider.releasePointerCapture(e.pointerId); } catch (err) {}
+      };
+
+      slider.addEventListener('pointerup', endPointer);
+      slider.addEventListener('pointercancel', endPointer);
+      slider.addEventListener('pointerleave', endPointer);
+
+    } else {
+      // Fallback para navegadores sin PointerEvent (mouse + touch)
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('dragging');
+        startX = e.pageX - slider.offsetLeft;
+        startScrollLeft = slider.scrollLeft;
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('dragging');
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 4; // 👈 duplica sensibilidad
+        slider.scrollLeft = startScrollLeft - walk;
+
+      });
+
+      // Touch fallback
+      slider.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        isDown = true;
+        slider.classList.add('dragging');
+        startX = e.touches[0].clientX;
+        startScrollLeft = slider.scrollLeft;
+      }, { passive: true });
+
+      slider.addEventListener('touchmove', (e) => {
+        if (!isDown || e.touches.length !== 1) return;
+        // si el gesto es mayormente horizontal lo manejamos
+        const dx = e.touches[0].clientX - startX;
+        if (Math.abs(dx) > 5) {
+          e.preventDefault();
+          slider.scrollLeft = startScrollLeft - dx;
+        }
+      }, { passive: false });
+
+      slider.addEventListener('touchend', () => {
+        isDown = false;
+        slider.classList.remove('dragging');
+      });
+    }
+
+  }); // end foreach
+});
+
+// --- Arrows navigation ---
+document.querySelectorAll('#all-books').forEach(section => {
+  const slider = section.querySelector('.books-slider');
+  const leftArrow = section.querySelector('.arrow.left');
+  const rightArrow = section.querySelector('.arrow.right');
+
+  if (!slider || !leftArrow || !rightArrow) return;
+
+  const card = slider.querySelector('li');
+  const cardWidth = card ? card.offsetWidth + 20 : 300; // ancho + gap
+
+  leftArrow.addEventListener('click', () => {
+    slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  });
+});
+</script>
+
+    
+</body>
+</html>
