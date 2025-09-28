@@ -92,6 +92,36 @@ body {
     margin: 0 auto;
     padding: 12px;
 
+        & .my {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 auto;
+
+            & .photo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding: 12px;
+                margin: 12px auto;
+                height: 260px;
+                width: 260px;
+                border-radius: 50%;
+                border: 3px solid #00ff95c4;
+                background-color: #00ff951f;
+                animation: bg-colors 1.4s infinite alternate;
+                overflow: hidden;
+            }
+
+            & img {
+                height: 300px;
+                width: 300px;
+                border-radius: 50%;
+            }
+        }
+
     /* border-top: 1px solid #9b9b9b;
     border-bottom: 1px solid #9b9b9b;
     border-right: 1px solid #9b9b9b; */
@@ -107,16 +137,15 @@ body {
         width: 100%;
         /* background-color: red; */
         /* backdrop-filter: blur(3px); */
-        margin-top: -60px;
-        margin-bottom: 20px;
-        padding: 22px;
+        margin-top: -20px;
+        padding: 60px 30px;
         overflow-x: auto;
 
             & h2 { 
-                text-align: center;
+                text-align: start;
                 font-size: 1rem;
                 font-weight: 500;
-                padding-top: 40px;
+                margin-bottom: -10px;
             }
 
         & .top-carrusel {
@@ -131,7 +160,7 @@ body {
             /* Ocultar scrollbars (opcional) */
             -ms-overflow-style: none;
             scrollbar-width: none;
-            padding-left: 2rem;            /* Espacio visible a la izquierda */
+            padding-left: 12px;            /* Espacio visible a la izquierda */
             scroll-padding-left: 2rem;     /* Alineación del scroll-snap */
 
 
@@ -150,11 +179,13 @@ body {
             max-width: 180px;
             padding: 0 2rem;
             font-size: .8rem;
-            border: 1px solid #a0a0a05b;
+            background: linear-gradient(to top, #00ff9517, #00af669a);
+            border: 1px solid #00ff95c4;
             border-radius: 8px;
-            /* background-color: #4242423b; */
-            box-shadow: inset 0 4px 12px #99999918;
+            /* box-shadow: inset 0 0 140px #00af662c; */
             transition: .1s ease-in-out;
+            user-select: none;
+            pointer-events: none;
             cursor: pointer;
             overflow: hidden;
 
@@ -162,6 +193,8 @@ body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                user-select: none;
+                pointer-events: none;
                 width: 100%;
                 height: 100%;
                 }
@@ -177,12 +210,11 @@ body {
                 }
 
                 &:hover {
-                    border: 1px solid #00ff95c4;
-                    box-shadow: inset 0 0 140px #00af66bb;
+                    background: linear-gradient(to top, #11111181,  #00af6673);
                 }
 
                 &:hover img {
-                    filter: drop-shadow(0 0 15px #ffffff2d);
+                    filter: drop-shadow(0 0 1px #ffffff2d);
                     transform: translateY(0px);
                     animation-play-state: running;
                 }
@@ -256,6 +288,18 @@ body {
 
 }
 
+@keyframes bg-colors {
+    0% {
+        box-shadow: inset 0 0 15px #00ff9538;
+        box-shadow: 0 0 150px #00ff9515;
+    }
+    100% {
+        background-color: #00000007;
+        box-shadow: inset 0 0 15px #00ff9565;
+        box-shadow: 0 0 150px #00ff9538;
+    }
+}
+
 /* .top-carrusel::-webkit-scrollbar {
   display: none;
 } */
@@ -289,10 +333,11 @@ body {
     z-index: 20;
     display: block;
     position: absolute;
-    top: 72%;
+    top: 60%;
     right: 2%;
     height: 50px;
     width: 50px;
+    background-color: transparent;
     transform: translate(-72%, -2%);
     border-radius: 50%;
     transform: scale(.4);
